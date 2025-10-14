@@ -49,8 +49,8 @@ function App() {
       </form>
 
       <div className='w-8 h-1/2 relative bg-secondary rounded-lg'>
-        <div className='w-full h-full flex flex-col text-xs font-semibold'>
-          <div className='flex-1 flex items-center justify-center bg-blue-500'>
+        <div className='w-full h-full flex flex-col-reverse text-xs font-semibold'>
+          <div className='flex-1 flex items-center justify-center bg-blue-500 rounded-b-lg'>
             <span className='-rotate-90 inline-block'>Underweight</span>
           </div>
           <div className='flex-1 flex items-center justify-center bg-green-500'>
@@ -59,7 +59,7 @@ function App() {
           <div className='flex-1 flex items-center justify-center bg-yellow-500'>
             <span className='-rotate-90 inline-block'>Overweight</span>
           </div>
-          <div className='flex-1 flex items-center justify-center bg-red-500'>
+          <div className='flex-1 flex items-center justify-center bg-red-500 rounded-t-lg'>
             <span className='-rotate-90 inline-block'>Obese</span>
           </div>
         </div>
