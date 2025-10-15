@@ -1,17 +1,40 @@
-import bmi from './assets/bmi.png'
+import bmiIcon from './assets/bmi.png'
+import { useState } from 'react';
+
 function App() {
+  const [userData, setUserData] = useState({
+    age: "",
+    gender: "",
+    weight: "",
+    height: "",
+  })
+
+  const handleChange = (field, value) => {
+    setUserData((prev) => ({
+      ...prev,
+      [field]: field === "gender" ? value : value === "" ? "" : Number(value) || 0
+    }));
+  };
+
+  const calculateBMI = () => {
+    const bmi = (userData.weight / ((userData.height / 100) ** 2)).toFixed(1);
+    console.log(bmi);
+    return bmi;
+  }
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <form className="h-1/2 m-2 p-6 flex-col bg-secondary rounded-lg"
       onSubmit={(e) => e.preventDefault()}>
         <div className="flex items-center flex-row  mb-4">
-          <img src={bmi} alt="Bmi" className="w-8 h-8 mr-2"/>
+          <img src={bmiIcon} alt="Bmi" className="w-8 h-8 mr-2"/>
           <h1 className="text-2xl font-bold underline">BMI Calculator</h1>
         </div>
         <div className="flex items-center justify-between mb-3">
           <label className="w-18">Age</label>
-          <input type="text" placeholder="Enter your age"
+          <input type="number" placeholder="Enter your age" 
+          value={userData.age}
+          onChange={(e) => handleChange("age", e.target.value)}
           className="flex-1 py-1 px-2 border rounded-md bg-secondary-shaded" />
         </div>
 
@@ -19,12 +42,18 @@ function App() {
           <label className="w-18">Gender</label>
             <div className="flex space-x-6">
               <label className="flex items-center space-x-2">
-              <input type="radio" name="gender" className="accent-[var(--primary-color)]" />
+              <input type="radio" name="gender" 
+              value="Male"
+              checked={userData.gender === "Male"} onChange={(e) => handleChange("gender", e.target.value)}
+              className="accent-[var(--primary-color)]" />
               <span>Male</span>
               </label>
 
               <label className="flex items-center space-x-2">
-              <input type="radio" name="gender" className="accent-[var(--primary-color)]" />
+              <input type="radio" name="gender" 
+              value="Female"
+              checked={userData.gender === "Female"} onChange={(e) => handleChange("gender", e.target.value)}
+              className="accent-[var(--primary-color)]" />
               <span>Female</span>
               </label>
             </div>
@@ -32,18 +61,27 @@ function App() {
 
         <div className="flex items-center justify-between mb-3">
           <label className="w-18">Weight</label>
-          <input type="text" placeholder="Enter your weight"
-          className="flex-1 py-1 px-2 border rounded-md bg-secondary-shaded" />
+          <div className='relative flex-1 items-center'>
+            <input type="number" placeholder="Enter your weight"
+            value={userData.weight} onChange={(e) => handleChange("weight", e.target.value)}
+            className="flex-1 py-1 px-2 border rounded-md bg-secondary-shaded" />
+            <span className='absolute right-2 top-1/2 -translate-y-1/2'>kg</span>
+          </div>
         </div>
 
         <div className="flex items-center justify-between mb-3">
           <label className="w-18">Height</label>
-          <input type="text" placeholder="Enter your Height"
-          className="flex-1 py-1 px-2 border rounded-md bg-secondary-shaded" />
+          <div className='relative flex-1 items-center'>
+            <input type="number" placeholder="Enter your Height"
+            value={userData.height} onChange={(e) => handleChange("height", e.target.value)}
+            className="py-1 px-2 border rounded-md bg-secondary-shaded" />
+            <span className="absolute right-2 top-1/2 -translate-y-1/2 ">cm</span>
+          </div>  
         </div>
 
         <div className="flex items-center justify-between">
-          <button className="w-full mr-2 py-1 px-2 border rounded-md bg-secondary-shaded">Calculate BMI</button>
+          <button onClick={calculateBMI}
+          className="w-full mr-2 py-1 px-2 border rounded-md bg-secondary-shaded">Calculate BMI</button>
           <button className="w-1/3 py-1 px-2 border rounded-md bg-secondary-shaded">Clear</button>
         </div>
       </form>
@@ -64,7 +102,6 @@ function App() {
           </div>
         </div>
       </div>
-
     </div>
   )
 }
