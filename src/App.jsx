@@ -2,6 +2,7 @@ import bmiIcon from './assets/bmi.png'
 import { useState } from 'react';
 
 function App() {
+  const [bmi, setBmi] = useState(0);
   const [userData, setUserData] = useState({
     age: "",
     gender: "",
@@ -15,11 +16,18 @@ function App() {
       [field]: field === "gender" ? value : value === "" ? "" : Number(value) || 0
     }));
   };
-
   const calculateBMI = () => {
-    const bmi = (userData.weight / ((userData.height / 100) ** 2)).toFixed(1);
-    console.log(bmi);
-    return bmi;
+    if (!userData.age || !userData.gender || !userData.weight || !userData.height) return;
+    const result = (userData.weight / ((userData.height / 100) ** 2)).toFixed(1);
+    setBmi(result);
+  }
+
+  const arrowPosition = () => {
+    if (!bmi) return "98%";
+    if (bmi < 18.5) return "75%";
+    if (bmi < 25) return "50%";
+    if (bmi < 30) return "25%";
+    return "98%";
   }
 
   return (
@@ -84,9 +92,16 @@ function App() {
           className="w-full mr-2 py-1 px-2 border rounded-md bg-secondary-shaded">Calculate BMI</button>
           <button className="w-1/3 py-1 px-2 border rounded-md bg-secondary-shaded">Clear</button>
         </div>
+
+        <div>
+          <p className="mt-4">Result: {bmi}</p>
+        </div>
       </form>
 
       <div className='w-8 h-1/2 relative bg-secondary rounded-lg'>
+      <div className="absolute -right-5 transition-all duration-700 w-4 h-2 bg-secondary"
+      style={{top: arrowPosition()}}/>
+
         <div className='w-full h-full flex flex-col-reverse text-xs font-semibold'>
           <div className='flex-1 flex items-center justify-center bg-blue-500 rounded-b-lg'>
             <span className='-rotate-90 inline-block'>Underweight</span>
