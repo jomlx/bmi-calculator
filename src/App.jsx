@@ -3,6 +3,8 @@ import { useState } from 'react';
 
 function App() {
   const [bmi, setBmi] = useState(0);
+  const [cls, setCls] = useState("");
+
   const [userData, setUserData] = useState({
     age: "",
     gender: "",
@@ -19,15 +21,22 @@ function App() {
   const calculateBMI = () => {
     if (!userData.age || !userData.gender || !userData.weight || !userData.height) return;
     const result = (userData.weight / ((userData.height / 100) ** 2)).toFixed(1);
+    let cls = "";
+    if (result < 18.5) { cls = "Underweight"; }
+    else if (result < 25 ) {cls = "Normal"; }
+    else if (result < 30 ) {cls = "Overweight"; }
+    else {cls = "Obese"; }
+
     setBmi(result);
+    setCls(cls);
   }
 
   const arrowPosition = () => {
-    if (!bmi) return "98%";
+    if (!bmi) return "99%";
     if (bmi < 18.5) return "75%";
     if (bmi < 25) return "50%";
     if (bmi < 30) return "25%";
-    return "98%";
+    return "0%";
   }
 
   return (
@@ -93,13 +102,14 @@ function App() {
           <button className="w-1/3 py-1 px-2 border rounded-md bg-secondary-shaded">Clear</button>
         </div>
 
-        <div>
-          <p className="mt-4">Result: {bmi}</p>
+        <div className='flex justify-between items-center mt-4'>
+          <p>Result:</p>
+          <p>{bmi} - {cls}</p>
         </div>
       </form>
 
       <div className='w-8 h-1/2 relative bg-secondary rounded-lg'>
-      <div className="absolute -right-5 transition-all duration-700 w-4 h-2 bg-secondary"
+      <div className="absolute -right-5 transition-all duration-700 w-4 h-1.5 bg-secondary"
       style={{top: arrowPosition()}}/>
 
         <div className='w-full h-full flex flex-col-reverse text-xs font-semibold'>
