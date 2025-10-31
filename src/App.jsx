@@ -59,8 +59,7 @@ function App() {
 
   return (
     <div className="h-screen w-full flex justify-center items-center gap-1.5">
-      <div>
-        <form className="h-1/2 p-6 flex-col bg-secondary rounded-lg"
+      <form className="h-1/2 p-6 flex-col bg-secondary rounded-lg"
         onSubmit={(e) => e.preventDefault()}>
           <div className="flex items-center flex-row  mb-4">
             <img src={bmiIcon} alt="Bmi" className="w-8 h-8 mr-2"/>
@@ -126,10 +125,7 @@ function App() {
             <p>Result: </p>
             <p>{bmi} - {cls}</p>
           </div>
-        </form>
-
-        
-      </div>
+      </form>
 
       <div className='w-8 h-1/2 relative bg-secondary rounded-lg'>
       <div className="absolute -right-5 transition-all duration-700 w-4 h-1.5 bg-secondary"
