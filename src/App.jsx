@@ -18,6 +18,7 @@ function App() {
       [field]: field === "gender" ? value : value === "" ? "" : Number(value) || 0
     }));
   };
+
   const calculateBMI = () => {
     if (!userData.age || !userData.gender || !userData.weight || !userData.height) {
       alert("Please fill in all fields before calculating.");
@@ -32,6 +33,17 @@ function App() {
 
     setBmi(result);
     setCls(cls);
+  }
+
+  const clear = () => {
+    setBmi(0);
+    setCls("classification");
+    setUserData({
+      age: "",
+      gender: "",
+      weight: "",
+      height: "",
+    })
   }
 
   const arrowPosition = () => {
@@ -59,7 +71,7 @@ function App() {
             <input type="number" placeholder="Enter your age" 
             value={userData.age}
             onChange={(e) => handleChange("age", e.target.value)}
-            className="flex-1 py-1 px-2 border rounded-md bg-secondary-shaded" />
+            className="flex-1 py-1 px-2 rounded-md bg-secondary-shaded" />
           </div>
 
           <div className="flex items-center justify-between mb-3">
@@ -88,7 +100,7 @@ function App() {
             <div className='relative flex-1 items-center'>
               <input type="number" placeholder="Enter your weight"
               value={userData.weight} onChange={(e) => handleChange("weight", e.target.value)}
-              className="flex-1 py-1 px-2 border rounded-md bg-secondary-shaded" />
+              className="flex-1 py-1 px-2 rounded-md bg-secondary-shaded" />
               <span className='absolute right-2 top-1/2 -translate-y-1/2'>kg</span>
             </div>
           </div>
@@ -98,15 +110,16 @@ function App() {
             <div className='relative flex-1 items-center'>
               <input type="number" placeholder="Enter your Height"
               value={userData.height} onChange={(e) => handleChange("height", e.target.value)}
-              className="py-1 px-2 border rounded-md bg-secondary-shaded" />
+              className="py-1 px-2 rounded-md bg-secondary-shaded" />
               <span className="absolute right-2 top-1/2 -translate-y-1/2 ">cm</span>
             </div>  
           </div>
 
           <div className="flex items-center justify-between">
             <button onClick={calculateBMI}
-            className="w-full mr-2 py-1 px-2 border rounded-md bg-secondary-shaded">Calculate BMI</button>
-            <button className="w-1/3 py-1 px-2 border rounded-md bg-secondary-shaded">Clear</button>
+            className="w-full mr-2 py-1 rounded-md bg-secondary-shaded hover:bg-green-500">Calculate BMI</button>
+            <button onClick={clear}
+            className="w-1/3 py-1 rounded-md bg-secondary-shaded hover:bg-orange-500">Clear</button>
           </div>
 
           <div className='flex justify-between items-center mt-4'>
@@ -115,18 +128,10 @@ function App() {
           </div>
         </form>
 
-        <div>
-          <span className='text-secondary'>
-            Underweight (&lt;18.5): Gain healthy weight. <br />
-            Normal (18.5–24.9): Keep it up! <br />
-            Overweight (25–29.9): Exercise more. <br />
-            Obese (30+): Start a healthy plan
-          </span>
-
-        </div>
+        
       </div>
 
-      <div className='w-8 h-110 relative bg-secondary rounded-lg'>
+      <div className='w-8 h-1/2 relative bg-secondary rounded-lg'>
       <div className="absolute -right-5 transition-all duration-700 w-4 h-1.5 bg-secondary"
       style={{top: arrowPosition()}}/>
 
@@ -141,7 +146,7 @@ function App() {
           </div>
           <div className='flex items-center justify-center bg-yellow-500'
           style={{ height: "16.7%" }}>
-            <span className='-rotate-90 inline-block'>Overweight</span>
+            <span className='-rotate-90 inline-block'>Above</span>
           </div>
           <div className='flex items-center justify-center bg-red-500 rounded-t-lg'
           style={{ height: "33.3%" }}>
